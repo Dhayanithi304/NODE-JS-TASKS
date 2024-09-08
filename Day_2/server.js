@@ -4,10 +4,12 @@ const path = require("path");
 
 const app = express()
 
+// define folder path 
 const outputFolder = "./output";
 
+// check is the output folder was exists or not
 if(!fs.existsSync(outputFolder)){
-  fs.mkdirSync(outputFolder);
+  fs.mkdirSync(outputFolder); // create a output folder 
 }
 
 app.get("/create_file", (req, res)=>{
@@ -19,11 +21,14 @@ app.get("/create_file", (req, res)=>{
   const mins = currentDate.getMinutes().toString()
   const secs = currentDate.getSeconds().toString()
 
-  const datetimeFilename = `${year}-${month}-${date}-${hrs}-${mins}-${secs}.txt`;
+  // define text file name
+  const datetimeFilename = `${year}-${month}-${date}-${hrs}-${mins}-${secs}.txt`; 
 
-  const filePath = path.join(outputFolder, datetimeFilename);
+  // create a text file into a output folder
+  const filePath = path.join(outputFolder, datetimeFilename); // ( folder path, file name )
 
-  fs.writeFile(filePath, currentDate.toISOString(), (err)=>{
+  // write content into the text file path 
+  fs.writeFile(filePath, currentDate.toISOString(), (err)=>{ 
     if(err){
       res.status(500).send(`error - `, err);
       return;
