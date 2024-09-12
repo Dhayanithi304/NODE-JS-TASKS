@@ -90,6 +90,9 @@ app.get("/get_rooms/:id", asyncHandler( async (req, res)=>{
             }
         },
     ])
+    const lastRoom = await Rooms.findOne().sort({ id: -1 }).exec();
+    const newRoomId = lastRoom ? lastRoom.id + 1 : 1; // If no room exists, start with ID 1
+
     if(!Room) return res.status(500).json({error: "Room not found"})
     res.status(200).json(Room);
 }));
